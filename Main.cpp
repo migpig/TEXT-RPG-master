@@ -26,13 +26,19 @@ typedef struct tagObject
 
 }OBJECT;
 
+const int PLAYER = 0;
+const int ENEMY = 1;
+const int MAX = 2;
 
 const int LOGO_Scene = 0;
 const int CLASS_Scene = 1;
-const int INVENTORY_Scene = 2;
-const int EQUIPMENT_Scene = 3;
-const int SHOP_Scene = 4;
-const int HUNTING_Scene = 5;
+const int Wizard_Scene = 2;
+const int Druid_Scene = 3;
+const int Paladin_Scene = 4;
+const int Warrior_Scene = 5;
+const int EXIT_Scene = 6;
+
+int Scene = 0;
 
 
 void CLASS();
@@ -41,14 +47,14 @@ void DRUID();
 void PALADIN();
 void WARRIOR();
 
-OBJECT* Player = (OBJECT*)malloc(sizeof(OBJECT));
-InitializePlayer(Player);
-OBJECT* Eenmy = (OBJECT*)malloc(sizeof(OBJECT));
-InitializeEnemy(Enemy);
+
+void InitializePlayer(OBJECT* Player);
+void InitializeEnemy(OBJECT* Monster);
 
 void SceneManager(OBJECT* _Player, OBJECT* _Enemy);
 char* SetName();
 void LogoScene();
+
 
 void SetPosition(int _x, int _y, char* _str, int _Color = 15);
 void SetColor(int _Color);
@@ -65,15 +71,15 @@ int main(void)
 
 	OBJECT* Player = (OBJECT*)malloc(sizeof(OBJECT));
 	InitializePlayer(Player);
-	OBJECT* Eenmy = (OBJECT*)malloc(sizeof(OBJECT));
-	InitializeEnemy(Enemy);
+	OBJECT* Monster = (OBJECT*)malloc(sizeof(OBJECT));
+	InitializeEnemy(Monster);
 	
 	DWORD dwTime = GetTickCount();
 	int Delay = 1000;
 
 	int UpCount = 0;
 
-	while (ture)
+	while (true)
 	{
 		if (dwTime + Delay < GetTickCount())
 		{
@@ -83,28 +89,9 @@ int main(void)
 
 			printf_s("%s\n", Player->Name);
 
-			SceneManager(Player, Enemy);
+			SceneManager(Player, Monster);
 		}
 	}
-
-	/*int Scene = 0;
-
-	printf_s("TEXT RPG를 시작합니다.\n\n\n\n");
-	printf_s("닉네임을 입력하세요 : ");
-
-	scanf("%s", &name);
-
-	printf_s("\n닉네임은 %s 입니다.\n", name);
-
-	Sleep(2000);
-
-	printf_s("\n\n\n시작하는중...\n\n");
-
-	Sleep(2000);
-
-	system("cls");
-
-	}*/
 
 	return 0;
 }
@@ -135,15 +122,26 @@ void SceneManager(OBJECT* _Player, OBJECT* _Enemy)
 
 		exit(NULL);
 		break;
+	}
 }
 
-char* SetName()
+	char* SetName()
 {
 	char Buffer[128] = "";
 
-	printf_s("이름 입력 : ");
+	printf_s("닉네임을 입력하세요 : ");
 
 	scanf("%s", Buffer);
+
+	Sleep(2000);
+
+	printf_s("\n\n\n시작하는중...\n\n");
+
+	printf_s("\n닉네임은 %s 입니다.\n", Buffer);
+
+	Sleep(2000);
+
+	system("cls");
 	
 	char* pName = (char*)malloc(strlen(Buffer) + 1);
 	
@@ -154,7 +152,7 @@ char* SetName()
 
 void LogoScene()
 {
-	int Width = (120 / 2) - (strlen("  ________ _____ __   _________   _____  _____   _____ "))
+	int Width = (120 / 2) - (strlen("  ________ _____ __   _________   _____  _____   _____ "));
 	int Height = 10;
 
 	SetPosition(Width, Height + 1, (char*)"  ________ _____ __   _________   _____  _____   _____ ");
@@ -166,7 +164,7 @@ void LogoScene()
 
 	Sleep(5000);
 
-	Secen++;
+	Scene++;
 }
 
 
@@ -195,7 +193,7 @@ void CLASS()
 
 void WIZARD()
 {
-
+	printf("");
 }
 
 void DRUID()
